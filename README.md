@@ -51,18 +51,20 @@ source="apache_logs.json" host="webserver" sourcetype="_json"
 source="apache_logs.json" host="webserver" sourcetype="_json"
 | where status>=500
 | stats count AS "Server Errors"
-
+```
 📈 Task 2: Web Statistics
 🔗 Top Requested URIs
+```
 source="apache_logs.json" host="webserver" sourcetype="_json"
 | top uri
 
 👤 Top Users by IP Address
 source="apache_logs.json" host="webserver" sourcetype="_json"
 | stats count AS Requests by ip
-
+```
 🌍 Task 3: Web Traffic Geo Visualization
 🗺️ Client IP Location Map
+```
 source="apache_logs.json" host="webserver" sourcetype="_json" method=GET
 | spath
 | iplocation ip
@@ -72,7 +74,7 @@ source="apache_logs.json" host="webserver" sourcetype="_json" method=GET
 📊 Dashboard Panels
 
 The Splunk dashboard includes:
-
+```
 📈 Total Web Requests (Single Value)
 📊 Successful Responses
 ❌ Client Errors (4xx)
@@ -80,6 +82,7 @@ The Splunk dashboard includes:
 📊 Top Requested URIs (Bar Chart)
 👤 Top IP Addresses (Bar Chart)
 🗺️ Geo Traffic Map
+```
 ---------------------------------
 📁 Project Structure
 ```
