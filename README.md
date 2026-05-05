@@ -22,8 +22,6 @@ Logs were ingested using:
 source="apache_logs.json" host="webserver" sourcetype="_json"
 
 
-> ⚠️ Note: Since `_json` sourcetype is used, field extraction is done manually using `spath`.
-
 ---
 
 ## ⏱️ Task 0: Time Range Setup
