@@ -8,7 +8,6 @@ The dashboard provides insights into web activity, performance metrics, error ra
 ---
 
 ## 🛠️ Tools & Technologies
-:contentReference[oaicite:0]{index=0}
 - JSON Web Logs (Apache Access Logs)
 - Splunk Dashboard Studio / Classic Dashboard
 - iplocation & geom visualization
