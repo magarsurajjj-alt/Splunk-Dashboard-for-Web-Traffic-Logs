@@ -92,7 +92,13 @@ splunk-web-traffic-dashboard/
 │
 ├── screenshots/
 │   ├── dashboard.png
-│   └── panels.png
+│   └── total request.png
+|   └── successful requests.png
+|   └── Client Errors.png
+|   └── Server Errors.png
+|   └── top uri requested.png
+|   └── top ip.png
+|   └── ip by loaction.png
 │
 ├── queries/
 │   └── splunk_queries.txt
