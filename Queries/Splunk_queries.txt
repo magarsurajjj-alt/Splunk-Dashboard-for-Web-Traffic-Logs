@@ -1,0 +1,32 @@
+### 🔢 Total Web Requests
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| stats count AS "Total Web Requests"
+
+✅ Successful Responses (200)
+source="apache_logs.json" host="webserver" sourcetype="_json" method=GET status=200
+| stats count AS "Successful Responses"
+
+❌ Client Errors (4xx)
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| where status>=400 AND status<500
+| stats count AS "Client Errors"
+
+🔥 Server Errors (5xx)
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| where status>=500
+| stats count AS "Server Errors"
+
+🔗 Top Requested URIs
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| top uri
+
+👤 Top Users by IP Address
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| stats count AS Requests by ip
+
+🗺️ Client IP Location Map
+source="apache_logs.json" host="webserver" sourcetype="_json" method=GET
+| spath
+| iplocation ip
+| stats count by Country
+| geom geo_countries featureIdField="Country"
