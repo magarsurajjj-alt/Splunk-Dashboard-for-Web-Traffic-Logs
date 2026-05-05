@@ -1,2 +1,104 @@
-# Splunk-Dashboard-for-Web-Traffic-Logs
-Apache log servers
+# 📊 Splunk Web Traffic Dashboard (JSON Log Analysis)
+
+## 📌 Overview
+This project demonstrates the creation of a web traffic monitoring dashboard using **Splunk** by analyzing JSON-based Apache access logs.  
+The dashboard provides insights into web activity, performance metrics, error rates, and geographic traffic distribution.
+
+---
+
+## 🛠️ Tools & Technologies
+- :contentReference[oaicite:0]{index=0}
+- JSON Web Logs (Apache Access Logs)
+- Splunk Dashboard Studio / Classic Dashboard
+- iplocation & geom visualization
+
+---
+
+## 🧱 Lab Setup
+
+Logs were ingested using:
+
+
+source="apache_logs.json" host="webserver" sourcetype="_json"
+
+
+> ⚠️ Note: Since `_json` sourcetype is used, field extraction is done manually using `spath`.
+
+---
+
+## ⏱️ Task 0: Time Range Setup
+- Added Time Range Input
+- Token name: `time_range`
+- Applied shared time filter across all dashboard panels
+
+---
+
+## 📊 Task 1: Web Activities
+
+### 🔢 Total Web Requests
+```spl
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| stats count AS "Total Web Requests"
+✅ Successful Responses (200)
+source="apache_logs.json" host="webserver" sourcetype="_json" method=GET status=200
+| stats count AS "Successful Responses"
+❌ Client Errors (4xx)
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| where status>=400 AND status<500
+| stats count AS "Client Errors"
+🔥 Server Errors (5xx)
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| where status>=500 AND status<600
+| stats count AS "Server Errors"
+📈 Task 2: Web Statistics
+🔗 Top Requested URIs
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| spath
+| stats count AS Hits by uri
+| sort -Hits
+👤 Top Users by IP Address
+source="apache_logs.json" host="webserver" sourcetype="_json"
+| spath
+| stats count AS Requests by ip
+| sort -Requests
+🌍 Task 3: Web Traffic Geo Visualization
+🗺️ Client IP Location Map
+source="apache_logs.json" host="webserver" sourcetype="_json" method=GET
+| spath
+| iplocation ip
+| stats count by Country
+| geom geo_countries featureIdField="Country"
+📊 Dashboard Panels
+
+The Splunk dashboard includes:
+
+📈 Total Web Requests (Single Value)
+📊 Successful Responses
+❌ Client Errors (4xx)
+🔥 Server Errors (5xx)
+📊 Top Requested URIs (Bar Chart)
+👤 Top IP Addresses (Bar Chart)
+🗺️ Geo Traffic Map
+📁 Project Structure
+splunk-web-traffic-dashboard/
+│
+├── logs/
+│   └── apache_logs.json
+│
+├── screenshots/
+│   ├── dashboard.png
+│   └── panels.png
+│
+├── queries/
+│   └── splunk_queries.txt
+│
+└── README.md
+⚙️ Setup Instructions
+Install Splunk Enterprise / Free version
+Go to Add Data → Upload
+Upload apache_logs.json
+Set:
+Index: web_logs
+Sourcetype: _json
+Build dashboard using SPL queries above
+Add panels using time range token time_range
