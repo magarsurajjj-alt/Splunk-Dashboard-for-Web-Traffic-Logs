@@ -1,4 +1,5 @@
 # 📊 Splunk Web Traffic Dashboard (JSON Log Analysis)
+<img width="1365" height="767" alt="Dashboard" src="https://github.com/user-attachments/assets/497a20a0-f7a5-44b6-8246-798bc198b7d4" />
 
 ## 📌 Overview
 This project demonstrates the creation of a web traffic monitoring dashboard using **Splunk** by analyzing JSON-based Apache access logs.  
@@ -7,7 +8,7 @@ The dashboard provides insights into web activity, performance metrics, error ra
 ---
 
 ## 🛠️ Tools & Technologies
-- :contentReference[oaicite:0]{index=0}
+:contentReference[oaicite:0]{index=0}
 - JSON Web Logs (Apache Access Logs)
 - Splunk Dashboard Studio / Classic Dashboard
 - iplocation & geom visualization
@@ -39,28 +40,30 @@ source="apache_logs.json" host="webserver" sourcetype="_json"
 ```spl
 source="apache_logs.json" host="webserver" sourcetype="_json"
 | stats count AS "Total Web Requests"
+
 ✅ Successful Responses (200)
 source="apache_logs.json" host="webserver" sourcetype="_json" method=GET status=200
 | stats count AS "Successful Responses"
+
 ❌ Client Errors (4xx)
 source="apache_logs.json" host="webserver" sourcetype="_json"
 | where status>=400 AND status<500
 | stats count AS "Client Errors"
+
 🔥 Server Errors (5xx)
 source="apache_logs.json" host="webserver" sourcetype="_json"
-| where status>=500 AND status<600
+| where status>=500
 | stats count AS "Server Errors"
+
 📈 Task 2: Web Statistics
 🔗 Top Requested URIs
 source="apache_logs.json" host="webserver" sourcetype="_json"
-| spath
-| stats count AS Hits by uri
-| sort -Hits
+| top uri
+
 👤 Top Users by IP Address
 source="apache_logs.json" host="webserver" sourcetype="_json"
-| spath
 | stats count AS Requests by ip
-| sort -Requests
+
 🌍 Task 3: Web Traffic Geo Visualization
 🗺️ Client IP Location Map
 source="apache_logs.json" host="webserver" sourcetype="_json" method=GET
@@ -68,6 +71,7 @@ source="apache_logs.json" host="webserver" sourcetype="_json" method=GET
 | iplocation ip
 | stats count by Country
 | geom geo_countries featureIdField="Country"
+```
 📊 Dashboard Panels
 
 The Splunk dashboard includes:
@@ -79,7 +83,9 @@ The Splunk dashboard includes:
 📊 Top Requested URIs (Bar Chart)
 👤 Top IP Addresses (Bar Chart)
 🗺️ Geo Traffic Map
+---------------------------------
 📁 Project Structure
+```
 splunk-web-traffic-dashboard/
 │
 ├── logs/
@@ -93,6 +99,7 @@ splunk-web-traffic-dashboard/
 │   └── splunk_queries.txt
 │
 └── README.md
+```
 ⚙️ Setup Instructions
 Install Splunk Enterprise / Free version
 Go to Add Data → Upload
