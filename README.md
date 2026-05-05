@@ -32,9 +32,8 @@ source="apache_logs.json" host="webserver" sourcetype="_json"
 ---
 
 ## 📊 Task 1: Web Activities
-
+```
 ### 🔢 Total Web Requests
-```spl
 source="apache_logs.json" host="webserver" sourcetype="_json"
 | stats count AS "Total Web Requests"
 
@@ -53,8 +52,8 @@ source="apache_logs.json" host="webserver" sourcetype="_json"
 | stats count AS "Server Errors"
 ```
 📈 Task 2: Web Statistics
-🔗 Top Requested URIs
 ```
+🔗 Top Requested URIs
 source="apache_logs.json" host="webserver" sourcetype="_json"
 | top uri
 
@@ -63,8 +62,8 @@ source="apache_logs.json" host="webserver" sourcetype="_json"
 | stats count AS Requests by ip
 ```
 🌍 Task 3: Web Traffic Geo Visualization
-🗺️ Client IP Location Map
 ```
+🗺️ Client IP Location Map
 source="apache_logs.json" host="webserver" sourcetype="_json" method=GET
 | spath
 | iplocation ip
